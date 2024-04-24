@@ -51,9 +51,15 @@
         },
         methods: { // ajax request
             async getData() {
-                const response = await fetch('https://raw.githubusercontent.com/MBozone/Project6/main/tickets1.json');
-                this.tickets = await response.json();
-                //tickets = data.filter(  (item) => item.major == majSelect );
+                try {
+                    const response = await fetch('http://raw.githubusercontent.com/MBozone/Project6/main/tickets1.json');
+                    if (!response.ok) {
+                        throw new Error('Failed to fetch data');
+                    }
+                    this.tickets = await response.json();
+                } catch (error) {
+                    console.error(error);
+                }
             },
         },
         mounted() {
