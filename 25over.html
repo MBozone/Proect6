@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Speeding Tickets</title>
+  	<!-- Matthew Bozone 4/25/2024 -->
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="navbar-header">
+      <a class="navbar-brand">Speeding Tickets (25mph or over)</a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav">
+        <li class="active"><a href="index.html">All Tickets</a></li>
+        <li><a href="25over.html">25mph or over</a></li>
+      </ul>
+    </div>
+  </nav>
+  <div id="ticketApp">
+    <h2>Tickets July 4, 2014, Minneapolis/St. Paul (25mph or over)</h2>
+    <table class="table table-bordered table-striped">
+      <tr>
+        <th>Ticket ID</th>
+        <th>Time</th>
+        <th>Posted Speed</th>
+        <th>MPH Over</th>
+        <th>Violator Sex</th>
+      </tr>
+      <tr v-for="ticket in filtered25over">
+        <td>{{ ticket.tid }}</td>
+        <td>{{ ticket.stop_time }}</td>
+        <td>{{ ticket.posted_speed }}</td>
+        <td>{{ ticket.actual_speed - ticket.posted_speed }}</td>
+        <td>{{ ticket.violator_sex }}</td>
+      </tr>
+    </table>
+  </div>
+</div>
+<script>
+  let app = Vue.createApp({
+    data() { // returns an object of data
+      return {
+       // array for ticket data
+	   tickets: [],
+        // array to for filtered tickets
+		filtered25over: [], 
+      }
+    },
+    methods: { // ajax request
+      async getData() {
+        const response = await fetch('https://mbozone.github.io/Project6/tickets1.json');
+        this.tickets = await response.json();
+        this.filtered25over = this.tickets.filter(ticket => ticket.actual_speed - ticket.posted_speed >= 25);
+      },
+    },
+    mounted() {
+      this.getData(); // calling the method to get data when the component is mounted
+    }
+  })
+
+  app.mount('#ticketApp'); // in which div to mount the vue app
+</script>
+</body>
+</html>
