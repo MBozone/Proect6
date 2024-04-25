@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <title>Speeding Tickets</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://unpkg.com/vue@next"></script>
+<script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
 </head>
 <body>
 <div class="container">
@@ -36,7 +37,7 @@
                 <td>{{ ticket.stop_time }}</td>
                 <td>{{ ticket.posted_speed }}</td>
                 <td>{{ ticket.actual_speed - ticket.posted_speed }}</td>
-                <td>{{ ticket.violater_sex }}</td>
+                <td>{{ ticket.violator_sex }}</td>
             </tr>
         </table>
     </div> <!-- end ticketApp -->
@@ -51,7 +52,7 @@
         },
         methods: { // ajax request
             async getData() {
-                const response = await fetch('https://raw.githubusercontent.com/MBozone/Project6/main/tickets1.json');
+                const response = await fetch('https://mbozone.github.io/Project6/tickets1.json');
                 this.tickets = await response.json();
                 //tickets = data.filter(  (item) => item.major == majSelect );
             },
